@@ -1,200 +1,135 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
-    font-family: "Segoe UI", system-ui, sans-serif;
-    background: #050509;
-    color: #f5f5f5;
-}
-
-/* Header */
-.site-header {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 24px;
-    background: rgba(5,5,9,0.9);
-    backdrop-filter: blur(12px);
-}
-
-.logo-area {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.nav {
-    display: flex;
-    gap: 16px;
-}
-
-.nav a {
-    color: #ddd;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-.flash-btn {
-    background: #222;
-    color: #ffd966;
-    border: 1px solid #ffd966;
-    padding: 8px 16px;
-    border-radius: 999px;
-    cursor: pointer;
-}
-
-.flash-btn.on {
-    background: #ffd966;
-    color: #222;
-}
-
-/* Hero */
-.hero {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    padding: 40px 24px;
-    gap: 24px;
-}
-
-.hero-bg {
-    position: relative;
-    border-radius: 24px;
+    margin: 0;
+    background: #000;
+    color: #fff;
+    font-family: sans-serif;
     overflow: hidden;
 }
 
-.camera-layer {
+/* متن وسط صفحه کوچک */
+.center-text {
     position: absolute;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: 0.8s;
+    top: 18%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
 }
 
-.camera-layer.visible {
+.center-text h1 {
+    font-size: 22px;
+}
+
+.center-text p {
+    font-size: 16px;
+}
+
+/* دکمه چراغ‌قوه */
+.flash-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #222;
+    color: #ffd966;
+    padding: 10px 20px;
+    border-radius: 999px;
+    border: 1px solid #ffd966;
+    cursor: pointer;
+}
+
+/* دوربین بزرگ وسط صفحه */
+.camera-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    transition: 0.6s ease;
+}
+
+.camera-box.visible {
+    transform: translate(-50%, -50%) scale(1);
     opacity: 1;
 }
 
-.camera-frame {
-    width: 80%;
-    max-width: 640px;
-    aspect-ratio: 16/9;
-    border-radius: 24px;
-    background: url("camera.png") center/cover no-repeat;
-    box-shadow: 0 30px 80px rgba(0,0,0,0.9);
-    position: relative;
+.camera-img {
+    width: 420px;
+    filter: drop-shadow(0 0 20px #000);
 }
 
-.camera-overlay {
+/* پس‌زمینه آبرنگی بارانی پاشیده‌شده */
+.rain-bg {
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle, rgba(255,255,255,0.1), rgba(0,0,0,0.8));
-}
+    z-index: -1;
 
-.camera-info {
-    position: absolute;
-    bottom: 16px;
-    right: 20px;
-    color: #fff;
-    opacity: 0.8;
-}
-
-/* Watercolor */
-.watercolor-layer {
-    position: absolute;
-    inset: 0;
     background:
         radial-gradient(circle at 20% 0%, rgba(255,255,255,0.9), transparent 60%),
-        radial-gradient(circle at 80% 100%, rgba(0,0,0,0.9), transparent 60%);
-    opacity: 0.9;
+        radial-gradient(circle at 80% 100%, rgba(0,0,0,0.9), transparent 60%),
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.3), rgba(0,0,0,0.7));
+
+    mix-blend-mode: screen;
+    opacity: 0.85;
+    overflow: hidden;
 }
 
-/* Text */
-.hero-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 12px;
+/* قطره‌های بارانی آبرنگی */
+.rain-bg::before,
+.rain-bg::after {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+
+    background-image:
+        radial-gradient(circle, rgba(255,255,255,0.15) 0, transparent 60%),
+        radial-gradient(circle, rgba(0,0,0,0.25) 0, transparent 60%);
+
+    animation: rainSplash 14s linear infinite;
+    opacity: 0.7;
 }
 
-.hero-title {
-    font-size: 30px;
+.rain-bg::after {
+    animation-duration: 20s;
+    animation-direction: reverse;
 }
 
-.photographer {
-    display: block;
-    margin-top: 10px;
+/* انیمیشن قطره‌ها */
+@keyframes rainSplash {
+    0% { transform: translateY(-20%) translateX(-10%); }
+    50% { transform: translateY(10%) translateX(10%); }
+    100% { transform: translateY(-20%) translateX(-10%); }
 }
 
-.stars {
-    font-size: 14px;
-    opacity: 0.5;
-}
-
-.cta-btn {
-    display: inline-block;
-    margin-top: 12px;
-    padding: 10px 20px;
-    background: #ffd966;
-    color: #222;
-    border-radius: 999px;
-    text-decoration: none;
-}
-
-/* Downloads */
-.downloads-section {
-    padding: 40px 24px;
-}
-
-.download-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-}
-
-.download-card {
-    background: #101018;
-    padding: 16px;
-    border-radius: 18px;
+/* بخش دانلود */
+.downloads {
+    position: absolute;
+    bottom: 30px;
+    width: 100%;
+    text-align: center;
 }
 
 .dl-btn {
     display: inline-block;
-    margin-top: 8px;
-    padding: 8px 16px;
+    margin: 10px;
+    padding: 10px 20px;
     border-radius: 999px;
-    border: 1px solid #ffd966;
-    color: #ffd966;
+    background: #ffd966;
+    color: #222;
     text-decoration: none;
+    font-size: 14px;
 }
 
-/* Footer */
-.site-footer {
-    padding: 16px 24px;
-    border-top: 1px solid #333;
-    display: flex;
-    justify-content: space-between;
+.note {
     font-size: 12px;
+    opacity: 0.7;
 }
 
-/* Responsive */
-@media (max-width: 900px) {
-    .hero {
-        grid-template-columns: 1fr;
-    }
+/* حالت چراغ‌قوه روشن */
+body.flash-on .rain-bg {
+    opacity: 0.55;
+    mix-blend-mode: normal;
+}
 
-    .download-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .nav {
-        display: none;
-    }
+body.flash-on .camera-box {
+    filter: drop-shadow(0 0 25px rgba(255,255,255,0.8));
 }
