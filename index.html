@@ -2,103 +2,41 @@
 <html lang="fa">
 <head>
     <meta charset="UTF-8">
-    <title>Happy World Photographer's Day | دانلود رایگان</title>
+    <title>Happy World Photographer's Day</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="دانلود رایگان تصویر متحرک روز جهانی عکاس با کیفیت‌های 4K، 8K و 1080p">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header class="site-header">
-        <div class="logo-area">
-            <span class="logo-mark">📸</span>
-            <span class="logo-text">Photographer's Day</span>
-        </div>
-        <nav class="nav">
-            <a href="#hero">خانه</a>
-            <a href="#downloads">دانلود</a>
-            <a href="#about">درباره</a>
-        </nav>
-        <button id="flashToggle" class="flash-btn">🔔 چراغ‌قوه</button>
-    </header>
+    <!-- دکمه چراغ‌قوه -->
+    <button id="flashToggle" class="flash-btn">🔦 روشن کردن چراغ‌قوه</button>
 
-    <main>
-        <section id="hero" class="hero">
-            <div class="hero-bg">
-                <div class="camera-layer" id="cameraBg">
-                    <div class="camera-frame">
-                        <div class="camera-overlay"></div>
-                        <div class="camera-info">
-                            <span>Sony Mirrorless • Cinematic Mood</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="watercolor-layer"></div>
-            </div>
+    <!-- دوربین بزرگ وسط صفحه -->
+    <div class="camera-box" id="cameraBox">
+        <img src="camera.png" class="camera-img">
+    </div>
 
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    <span class="happy">Happy 😊</span>
-                    <span class="world">World 🌍</span>
-                    <span class="photographer">
-                        Photographer's Day
-                        <span class="stars">✦ ✧ ✦ ✧</span>
-                    </span>
-                </h1>
+    <!-- پس‌زمینه آبرنگی بارانی -->
+    <div class="rain-bg"></div>
 
-                <p class="hero-subtitle">
-                    Day • August 19 <span class="emoji">😍</span>
-                </p>
+    <!-- متن وسط صفحه کوچک -->
+    <div class="center-text">
+        <h1>Happy 😊 World 🌍 Photographer's Day</h1>
+        <p>Day • August 19 😍</p>
+    </div>
 
-                <p class="hero-text">
-                    این صفحه برای همهٔ عکاس‌ها ساخته شده؛  
-                    می‌تونی تصویر متحرک روز جهانی عکاس را با کیفیت‌های مختلف رایگان دانلود کنی.
-                </p>
+    <!-- بخش دانلود -->
+    <section class="downloads">
+        <h2>دانلود تصویر متحرک</h2>
 
-                <a href="#downloads" class="cta-btn">دانلود 🎬</a>
-            </div>
-        </section>
+        <a class="dl-btn" href="downloads/photographer-day-4k.mp4" download>دانلود 4K</a>
+        <a class="dl-btn" href="downloads/photographer-day-8k.mp4" download>دانلود 8K</a>
+        <a class="dl-btn" href="downloads/photographer-day-1080p.mp4" download>دانلود 1080p</a>
 
-        <section id="downloads" class="downloads-section">
-            <h2>دانلود تصویر متحرک</h2>
-            <p class="downloads-desc">کیفیت مورد نظر را انتخاب کن:</p>
-
-            <div class="download-grid">
-                <div class="download-card">
-                    <h3>4K Ultra HD</h3>
-                    <p>کیفیت بالا برای نمایش حرفه‌ای.</p>
-                    <a href="downloads/photographer-day-4k.mp4" class="dl-btn" download>دانلود 4K</a>
-                </div>
-
-                <div class="download-card">
-                    <h3>8K Cinema</h3>
-                    <p>کیفیت سینمایی برای نمایش‌های بزرگ.</p>
-                    <a href="downloads/photographer-day-8k.mp4" class="dl-btn" download>دانلود 8K</a>
-                </div>
-
-                <div class="download-card">
-                    <h3>1080p Full HD</h3>
-                    <p>مناسب موبایل و شبکه‌های اجتماعی.</p>
-                    <a href="downloads/photographer-day-1080p.mp4" class="dl-btn" download>دانلود 1080p</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="about" class="about-section">
-            <h2>دربارهٔ پروژه</h2>
-            <p>
-                این سایت برای روز جهانی عکاس ساخته شده تا هر کسی بتواند یک تصویر متحرک زیبا  
-                با حال‌وهوای دوربین‌های سونی و افکت آبرنگی بارانی دانلود کند.
-            </p>
-        </section>
-    </main>
-
-    <footer class="site-footer">
-        <span>ساخته شده با عشق ❤️ برای همهٔ عکاس‌ها</span>
-        <span class="footer-note">GitHub Pages • hoseinmobsher313-svg</span>
-    </footer>
+        <p class="note">اگر ارور می‌دهد یعنی فایل‌ها داخل پوشه downloads نیستند.</p>
+    </section>
 
     <script src="script.js"></script>
 </body>
 </html>
-     
+  
