@@ -1,135 +1,200 @@
-const flashlight = document.getElementById("flashlight");
-const brightness = document.getElementById("brightness");
-const glow = document.getElementById("glow");
-const bell = document.getElementById("bell");
-const cameraCard = document.getElementById("cameraCard");
-const toast = document.getElementById("toast");
-const quality = document.getElementById("quality");
-const downloadBtn = document.getElementById("downloadBtn");
-const shareBtn = document.getElementById("shareBtn");
-
-function showToast(text){
-  toast.textContent = text;
-  toast.classList.add("show");
-  clearTimeout(showToast.t);
-  showToast.t = setTimeout(()=>toast.classList.remove("show"), 2200);
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-function setLight(on){
-  document.body.classList.toggle("lamp-on", on);
-  flashlight.classList.toggle("on", on);
-  flashlight.setAttribute("aria-pressed", String(on));
-  glow.style.opacity = on ? (0.45 + Number(brightness.value)/180) : 0.45;
-}
-flashlight.addEventListener("click",()=>setLight(!document.body.classList.contains("lamp-on")));
-brightness.addEventListener("input",()=>{
-  const v = Number(brightness.value);
-  glow.style.transform = `scale(${0.8 + v/100})`;
-  if(v > 8) setLight(true);
-});
-
-function revealCamera(){
-  cameraCard.classList.add("show");
-  setTimeout(()=>cameraCard.classList.remove("show"), 5200);
-}
-bell.addEventListener("click", revealCamera);
-
-// Drag the bell downward to reveal the camera.
-let dragging=false,startY=0;
-bell.addEventListener("pointerdown",e=>{dragging=true;startY=e.clientY;bell.setPointerCapture(e.pointerId)});
-bell.addEventListener("pointermove",e=>{
-  if(!dragging) return;
-  const dy=e.clientY-startY;
-  bell.style.transform=`translateY(${Math.max(-20,Math.min(170,dy))}px)`;
-  if(dy>70) revealCamera();
-});
-bell.addEventListener("pointerup",()=>{dragging=false;bell.style.transform=""});
-
-function getCanvasSize(){
-  const h = Number(quality.value);
-  return {w: Math.round(h*16/9), h};
+body {
+    font-family: "Segoe UI", system-ui, sans-serif;
+    background: #050509;
+    color: #f5f5f5;
 }
 
-async function makeVideo(){
-  if(!window.MediaRecorder || !HTMLCanvasElement.prototype.captureStream){
-    showToast("Your browser does not support WebM recording.");
-    return;
-  }
-  const {w,h}=getCanvasSize();
-  const maxPixels = 3840*2160;
-  const scale = Math.min(1, Math.sqrt(maxPixels/(w*h)));
-  const cw=Math.max(640,Math.floor(w*scale)), ch=Math.max(360,Math.floor(h*scale));
-  const canvas=document.createElement("canvas");
-  canvas.width=cw; canvas.height=ch;
-  const ctx=canvas.getContext("2d");
-  const img=new Image();
-  img.src="assets/sony-camera.jpg";
-  await new Promise((res,rej)=>{img.onload=res;img.onerror=rej});
-  const stream=canvas.captureStream(30);
-  const chunks=[];
-  const recorder=new MediaRecorder(stream,{mimeType:"video/webm;codecs=vp9"});
-  recorder.ondataavailable=e=>e.data.size&&chunks.push(e.data);
-  const done=new Promise(resolve=>recorder.onstop=resolve);
-  recorder.start();
+/* Header */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px;
+    background: rgba(5,5,9,0.9);
+    backdrop-filter: blur(12px);
+}
 
-  const start=performance.now(), duration=7000;
-  function frame(now){
-    const t=Math.min(1,(now-start)/duration);
-    const p=t*duration;
-    ctx.fillStyle="#050608";ctx.fillRect(0,0,cw,ch);
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 
-    const imgRatio=img.width/img.height, outRatio=cw/ch;
-    let dw=cw,dh=ch,dx=0,dy=0;
-    if(imgRatio>outRatio){dh=ch;dw=dh*imgRatio;dx=(cw-dw)/2}
-    else{dw=cw;dh=dw/imgRatio;dy=(ch-dh)/2}
-    ctx.globalAlpha=.92;ctx.drawImage(img,dx,dy,dw,dh);ctx.globalAlpha=1;
+.nav {
+    display: flex;
+    gap: 16px;
+}
 
-    const g=ctx.createRadialGradient(cw*.5,ch*.48,0,cw*.5,ch*.48,cw*.45);
-    g.addColorStop(0,"rgba(255,224,135,.28)");g.addColorStop(.35,"rgba(255,224,135,.08)");g.addColorStop(1,"rgba(0,0,0,.72)");
-    ctx.fillStyle=g;ctx.fillRect(0,0,cw,ch);
+.nav a {
+    color: #ddd;
+    text-decoration: none;
+    font-size: 14px;
+}
 
-    ctx.textAlign="center";
-    const titleSize=Math.max(38,cw*.055);
-    ctx.font=`700 ${titleSize}px Arial`;
-    ctx.fillStyle=`rgba(255,255,255,${Math.min(1,t*2)})`;
-    ctx.fillText("Happy 😊 World 🌍",cw/2,ch*.25 + Math.sin(t*Math.PI)*18);
-    ctx.font=`300 ${Math.max(22,cw*.028)}px Arial`;
-    ctx.fillStyle="rgba(255,255,255,.82)";
-    ctx.fillText("Photographer's Day",cw/2,ch*.34);
-    ctx.font=`500 ${Math.max(18,cw*.018)}px Arial`;
-    ctx.fillStyle="rgba(255,255,255,.55)";
-    ctx.fillText("August 19  😍",cw/2,ch*.39);
+.flash-btn {
+    background: #222;
+    color: #ffd966;
+    border: 1px solid #ffd966;
+    padding: 8px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+}
 
-    // Watercolor/rain droplets.
-    for(let i=0;i<120;i++){
-      const x=(i*83 + p*.03*(i%5+1))%cw;
-      const y=(i*47 + p*(.08+(i%4)*.025))%ch;
-      const r=2+(i%7);
-      ctx.fillStyle=i%2?"rgba(255,255,255,.06)":"rgba(0,0,0,.07)";
-      ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
+.flash-btn.on {
+    background: #ffd966;
+    color: #222;
+}
+
+/* Hero */
+.hero {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    padding: 40px 24px;
+    gap: 24px;
+}
+
+.hero-bg {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+}
+
+.camera-layer {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: 0.8s;
+}
+
+.camera-layer.visible {
+    opacity: 1;
+}
+
+.camera-frame {
+    width: 80%;
+    max-width: 640px;
+    aspect-ratio: 16/9;
+    border-radius: 24px;
+    background: url("camera.png") center/cover no-repeat;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.9);
+    position: relative;
+}
+
+.camera-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(255,255,255,0.1), rgba(0,0,0,0.8));
+}
+
+.camera-info {
+    position: absolute;
+    bottom: 16px;
+    right: 20px;
+    color: #fff;
+    opacity: 0.8;
+}
+
+/* Watercolor */
+.watercolor-layer {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 20% 0%, rgba(255,255,255,0.9), transparent 60%),
+        radial-gradient(circle at 80% 100%, rgba(0,0,0,0.9), transparent 60%);
+    opacity: 0.9;
+}
+
+/* Text */
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+}
+
+.hero-title {
+    font-size: 30px;
+}
+
+.photographer {
+    display: block;
+    margin-top: 10px;
+}
+
+.stars {
+    font-size: 14px;
+    opacity: 0.5;
+}
+
+.cta-btn {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 10px 20px;
+    background: #ffd966;
+    color: #222;
+    border-radius: 999px;
+    text-decoration: none;
+}
+
+/* Downloads */
+.downloads-section {
+    padding: 40px 24px;
+}
+
+.download-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.download-card {
+    background: #101018;
+    padding: 16px;
+    border-radius: 18px;
+}
+
+.dl-btn {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid #ffd966;
+    color: #ffd966;
+    text-decoration: none;
+}
+
+/* Footer */
+.site-footer {
+    padding: 16px 24px;
+    border-top: 1px solid #333;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .hero {
+        grid-template-columns: 1fr;
     }
-    const wipe=Math.sin(t*Math.PI);
-    ctx.fillStyle=`rgba(255,255,255,${.18*wipe})`;ctx.fillRect(0,0,cw,ch);
-    if(t<1) requestAnimationFrame(frame); else recorder.stop();
-  }
-  requestAnimationFrame(frame);
-  await done;
-  const blob=new Blob(chunks,{type:"video/webm"});
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(blob);
-  a.download=`photographers-day-${quality.value}p.webm`;
-  a.click();
-  setTimeout(()=>URL.revokeObjectURL(a.href),2000);
-  showToast(`Downloaded ${quality.value}p WebM`);
+
+    .download-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .nav {
+        display: none;
+    }
 }
-downloadBtn.addEventListener("click",makeVideo);
-
-shareBtn.addEventListener("click",async()=>{
-  const data={title:"Happy World Photographer's Day",text:"Happy World Photographer's Day — August 19",url:location.href};
-  try{
-    if(navigator.share){await navigator.share(data)}
-    else{await navigator.clipboard.writeText(location.href);showToast("Page link copied")}
-  }catch(e){}
-});
-
-setLight(false);
