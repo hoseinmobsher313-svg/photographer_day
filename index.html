@@ -1,106 +1,73 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#080a0d">
-<meta name="description" content="Happy World Photographer's Day — interactive cinematic animated wallpaper.">
-<title>Happy World Photographer's Day — August 19</title>
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#050608">
+  <title>Happy World Photographer's Day</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<main id="app" class="scene is-on">
-  <canvas id="paint" aria-hidden="true"></canvas>
-  <div class="grain" aria-hidden="true"></div>
-  <div class="vignette" aria-hidden="true"></div>
+  <div class="rain"></div>
+  <div class="watercolor watercolor-top"></div>
+  <div class="watercolor watercolor-bottom"></div>
 
-  <!-- Faint cinematic camera-back silhouettes -->
-  <div class="camera-wall" aria-hidden="true">
-    <span class="ghost-camera g1"></span>
-    <span class="ghost-camera g2"></span>
-    <span class="ghost-camera g3"></span>
-    <span class="ghost-camera g4"></span>
-  </div>
+  <main class="stage" id="stage">
+    <div class="camera-bg"></div>
+    <div class="shade"></div>
 
-  <section class="hero" aria-label="World Photographer's Day">
-    <p class="eyebrow">A CINEMATIC TRIBUTE TO THE ART OF SEEING</p>
-    <h1>
-      <span class="word">Happy</span>
-      <span class="word world-word">World <b>🌍</b></span>
-      <span class="word photographer-word">Photographer</span>
-    </h1>
-    <div class="spark-line" aria-hidden="true"><i>✦</i><i>·</i><i>✧</i><i>·</i><i>✦</i></div>
-    <p class="subtitle">Happy World Photographer's Day</p>
-    <p class="date">AUGUST <strong>19</strong></p>
-  </section>
+    <header class="hero">
+      <p class="eyebrow">HTML · CSS · JS</p>
+      <h1>
+        <span class="drop">Happy</span>
+        <span class="drop emoji">😊</span>
+        <span class="drop">World</span>
+        <span class="drop emoji">🌍</span>
+      </h1>
+      <h2 class="photographer">Photographer's Day</h2>
+      <p class="date">August 19 <span>😍</span></p>
+    </header>
 
-  <div class="lamp" aria-hidden="true">
-    <div class="lamp-cable"></div>
-    <div class="lamp-cap"></div>
-    <div class="lamp-shade"></div>
-    <div class="lamp-bulb"></div>
-    <div class="lamp-glow"></div>
-  </div>
+    <section class="camera-card" id="cameraCard" aria-label="Camera panel">
+      <div class="camera-image"></div>
+      <div class="camera-copy">
+        <span>SONY · CAMERA & FILM</span>
+        <strong>Capture the light.</strong>
+        <small>Happy World Photographer's Day</small>
+      </div>
+    </section>
 
-  <section class="camera-stage" aria-label="Camera">
-    <div class="camera-aura"></div>
-    <img id="camera" src="camera.png" alt="Camera">
-    <div class="camera-reflection"></div>
-  </section>
+    <div class="flashlight-wrap" aria-label="Flashlight controls">
+      <div class="glow" id="glow"></div>
+      <button class="flashlight" id="flashlight" type="button" aria-pressed="false">
+        <span class="bulb">●</span>
+        <span class="flash-label">FLASHLIGHT</span>
+      </button>
+      <input id="brightness" class="brightness" type="range" min="0" max="100" value="35" aria-label="Light intensity">
+    </div>
 
-  <div class="ink-splash" aria-hidden="true">
-    <span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span>
-  </div>
+    <button class="bell" id="bell" type="button" aria-label="Open camera">
+      🔔
+      <span class="bell-tip">Drag down</span>
+    </button>
 
-  <!-- Draggable light switch -->
-  <button id="lightControl" class="light-control" aria-label="Drag or click to turn the light on or off" aria-pressed="true">
-    <span class="control-label">LIGHT</span>
-    <span class="control-rail"><span class="control-fill"></span><span class="control-knob">☼</span></span>
-    <span class="control-state">ON</span>
-  </button>
-
-  <footer class="footer">
-    <span>SEE THE MOMENT.</span>
-    <span>FEEL THE LIGHT.</span>
-    <span class="smile">😍</span>
-  </footer>
-
-  <aside class="download-panel" aria-label="Wallpaper export">
-    <div class="panel-title">WALLPAPER EXPORT</div>
-    <div class="export-row">
-      <label for="resolution">QUALITY</label>
-      <select id="resolution">
-        <option value="1920x1080">1080p — Full HD</option>
-        <option value="2560x1440">1440p — QHD</option>
-        <option value="3840x2160">4K — UHD</option>
-        <option value="7680x4320">8K — UHD</option>
+    <section class="download-panel">
+      <div>
+        <b>Download animation</b>
+        <span>1080p · 4K · 8K*</span>
+      </div>
+      <select id="quality">
+        <option value="1080">1080p</option>
+        <option value="2160">4K</option>
+        <option value="4320">8K</option>
       </select>
-    </div>
-    <div class="export-row">
-      <label for="duration">LOOP</label>
-      <select id="duration">
-        <option value="8">8 seconds</option>
-        <option value="12" selected>12 seconds</option>
-        <option value="16">16 seconds</option>
-      </select>
-    </div>
-    <div class="buttons">
-      <button id="downloadBtn" class="primary">DOWNLOAD ANIMATED WALLPAPER</button>
-      <button id="shareBtn">SHARE PAGE</button>
-    </div>
-    <div id="progressWrap" class="progress-wrap" hidden>
-      <div class="progress"><span id="progress"></span></div>
-      <small id="progressText">Preparing…</small>
-    </div>
-    <small class="hint">WebM export uses your browser's native recorder. 8K may require a modern desktop browser.</small>
-  </aside>
+      <button id="downloadBtn" type="button">Download WebM</button>
+      <button id="shareBtn" type="button" class="ghost">Share / Copy link</button>
+      <small>*8K export depends on browser/device memory and is an upscale of the supplied image.</small>
+    </section>
+  </main>
 
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
-</main>
-
-<script src="app.js"></script>
-<script>if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});</script>
+  <div class="toast" id="toast"></div>
+  <script src="script.js"></script>
 </body>
 </html>

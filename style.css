@@ -1,0 +1,85 @@
+*{box-sizing:border-box}
+:root{
+  --ink:#07090d;
+  --paper:#f4f1ea;
+  --white:#fff;
+  --gold:#d7b66a;
+}
+html,body{margin:0;min-height:100%;background:#050608;color:var(--white);font-family:Arial,Helvetica,sans-serif}
+body{overflow-x:hidden}
+.stage{
+  position:relative;min-height:100vh;overflow:hidden;isolation:isolate;
+  background:#07090d;
+}
+.camera-bg{
+  position:absolute;inset:0;z-index:-5;
+  background-image:url("assets/sony-camera.jpg");
+  background-size:cover;background-position:center;
+  filter:grayscale(.9) contrast(1.08) brightness(.48);
+  transform:scale(1.04);
+  transition:filter .8s,opacity .8s,transform 1.2s;
+}
+.shade{position:absolute;inset:0;z-index:-4;background:
+  radial-gradient(circle at 50% 35%,transparent 0 16%,rgba(0,0,0,.35) 52%,rgba(0,0,0,.92) 100%),
+  linear-gradient(to bottom,rgba(255,255,255,.08),rgba(0,0,0,.78))}
+.hero{position:relative;text-align:center;padding:8vh 20px 0;z-index:3}
+.eyebrow{letter-spacing:.5em;font-size:.72rem;opacity:.5;margin:0 0 25px}
+h1{margin:0;display:flex;justify-content:center;gap:.18em;flex-wrap:wrap;font-size:clamp(2.5rem,7vw,6.8rem);line-height:.9;text-transform:none}
+.drop{display:inline-block;animation:dropIn 1.1s cubic-bezier(.2,.9,.25,1) both}
+.drop:nth-child(1){animation-delay:.05s}.drop:nth-child(2){animation-delay:.2s}.drop:nth-child(3){animation-delay:.35s}.drop:nth-child(4){animation-delay:.5s}
+.emoji{font-size:.72em}
+.photographer{
+  margin:26px 0 8px;font-size:clamp(1.25rem,3.3vw,2.7rem);font-weight:300;letter-spacing:.12em;
+  text-shadow:0 0 20px rgba(255,255,255,.18)
+}
+.date{margin:0;font-size:clamp(.9rem,2vw,1.3rem);opacity:.58;letter-spacing:.28em}
+.date span{font-size:1.15em}
+.camera-card{
+  position:relative;width:min(760px,84vw);height:min(410px,48vw);min-height:260px;
+  margin:6vh auto 15vh;border-radius:28px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.17);background:rgba(0,0,0,.35);
+  box-shadow:0 35px 100px rgba(0,0,0,.55);opacity:0;transform:translateY(30px) scale(.97);
+  transition:opacity .8s,transform .8s;z-index:2
+}
+.camera-card.show{opacity:1;transform:none}
+.camera-image{position:absolute;inset:0;background:url("assets/sony-camera.jpg") center/cover;filter:brightness(.7) saturate(.8)}
+.camera-copy{position:absolute;inset:auto 28px 25px;color:white;display:flex;flex-direction:column;gap:5px;text-shadow:0 2px 12px #000}
+.camera-copy span{font-size:.7rem;letter-spacing:.25em;opacity:.7}.camera-copy strong{font-size:clamp(1.3rem,3vw,2.4rem)}.camera-copy small{opacity:.72}
+.flashlight-wrap{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);z-index:4;display:flex;flex-direction:column;align-items:center;gap:10px}
+.glow{
+  position:absolute;width:320px;height:320px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(255,224,135,.35),rgba(255,224,135,.12) 28%,transparent 68%);
+  opacity:.45;filter:blur(4px);transition:opacity .5s,transform .5s
+}
+.flashlight{position:relative;width:190px;height:68px;border:1px solid rgba(255,255,255,.22);border-radius:18px;background:rgba(245,243,235,.74);backdrop-filter:blur(12px);color:#171717;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:12px;box-shadow:0 12px 40px rgba(0,0,0,.3);transition:.35s}
+.flashlight .bulb{font-size:1.1rem;color:#9d8c5b}.flash-label{font-size:.75rem;letter-spacing:.18em}
+.flashlight.on{background:#fff;box-shadow:0 0 50px rgba(255,231,160,.6);transform:translateY(-3px)}
+.flashlight.on+.brightness{opacity:1}
+.brightness{width:190px;accent-color:#cfc7b1;opacity:.75}
+.bell{position:fixed;right:22px;top:50%;z-index:8;width:62px;height:62px;border:1px solid rgba(255,255,255,.2);border-radius:50%;background:rgba(10,12,16,.72);color:white;font-size:1.45rem;cursor:grab;backdrop-filter:blur(12px);box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.bell:active{cursor:grabbing}.bell-tip{position:absolute;right:72px;white-space:nowrap;font-size:.6rem;letter-spacing:.12em;opacity:.45}
+.download-panel{
+  position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:10;
+  width:min(900px,calc(100% - 28px));display:flex;align-items:center;gap:10px;padding:12px 14px;
+  border:1px solid rgba(255,255,255,.14);border-radius:18px;background:rgba(7,9,13,.75);backdrop-filter:blur(18px)
+}
+.download-panel>div{display:flex;flex-direction:column;margin-right:auto}.download-panel span,.download-panel small{font-size:.65rem;opacity:.5;margin-top:3px}
+.download-panel select,.download-panel button{height:40px;border-radius:10px;border:1px solid rgba(255,255,255,.15);padding:0 13px;background:#efede6;color:#111;cursor:pointer;font-weight:700}
+.download-panel .ghost{background:transparent;color:white}
+.download-panel small{position:absolute;left:15px;bottom:-17px}
+.rain{position:absolute;inset:0;z-index:-2;pointer-events:none;opacity:.25;background-image:repeating-linear-gradient(104deg,transparent 0 24px,rgba(255,255,255,.08) 25px,transparent 27px 70px);animation:rain 7s linear infinite}
+.watercolor{position:absolute;left:-10%;width:120%;height:18vh;z-index:-1;pointer-events:none;filter:blur(12px);opacity:.2}
+.watercolor-top{top:-7vh;background:radial-gradient(ellipse at 30% 40%,#fff 0 12%,transparent 45%),radial-gradient(ellipse at 70% 60%,#111 0 15%,transparent 46%);transform:rotate(-2deg)}
+.watercolor-bottom{bottom:-7vh;background:radial-gradient(ellipse at 30% 40%,#111 0 15%,transparent 45%),radial-gradient(ellipse at 70% 60%,#fff 0 12%,transparent 46%);transform:rotate(2deg)}
+.toast{position:fixed;left:50%;bottom:100px;transform:translate(-50%,20px);padding:10px 15px;border-radius:12px;background:#fff;color:#111;opacity:0;pointer-events:none;transition:.3s;z-index:30;font-size:.85rem}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+body.lamp-on .camera-bg{filter:grayscale(.55) contrast(1.1) brightness(.72)}
+body.lamp-on .glow{opacity:1;transform:scale(1.15)}
+body.lamp-on .watercolor{opacity:.3}
+@keyframes dropIn{0%{opacity:0;transform:translateY(-80px) rotate(-7deg)}70%{opacity:1;transform:translateY(9px) rotate(2deg)}100%{transform:translateY(0) rotate(0)}}
+@keyframes rain{from{background-position:0 -500px}to{background-position:120px 500px}}
+@media(max-width:700px){
+  .hero{padding-top:7vh}.camera-card{width:88vw;height:60vw;margin-bottom:20vh}
+  .bell{right:12px}.download-panel{flex-wrap:wrap}.download-panel>div{width:100%}
+  .download-panel small{display:none}
+}
