@@ -1,73 +1,104 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#050608">
-  <title>Happy World Photographer's Day</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Happy World Photographer's Day | دانلود رایگان</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="دانلود رایگان تصویر متحرک روز جهانی عکاس با کیفیت‌های 4K، 8K و 1080p">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="rain"></div>
-  <div class="watercolor watercolor-top"></div>
-  <div class="watercolor watercolor-bottom"></div>
 
-  <main class="stage" id="stage">
-    <div class="camera-bg"></div>
-    <div class="shade"></div>
-
-    <header class="hero">
-      <p class="eyebrow">HTML · CSS · JS</p>
-      <h1>
-        <span class="drop">Happy</span>
-        <span class="drop emoji">😊</span>
-        <span class="drop">World</span>
-        <span class="drop emoji">🌍</span>
-      </h1>
-      <h2 class="photographer">Photographer's Day</h2>
-      <p class="date">August 19 <span>😍</span></p>
+    <header class="site-header">
+        <div class="logo-area">
+            <span class="logo-mark">📸</span>
+            <span class="logo-text">Photographer's Day</span>
+        </div>
+        <nav class="nav">
+            <a href="#hero">خانه</a>
+            <a href="#downloads">دانلود</a>
+            <a href="#about">درباره</a>
+        </nav>
+        <button id="flashToggle" class="flash-btn">🔔 چراغ‌قوه</button>
     </header>
 
-    <section class="camera-card" id="cameraCard" aria-label="Camera panel">
-      <div class="camera-image"></div>
-      <div class="camera-copy">
-        <span>SONY · CAMERA & FILM</span>
-        <strong>Capture the light.</strong>
-        <small>Happy World Photographer's Day</small>
-      </div>
-    </section>
+    <main>
+        <section id="hero" class="hero">
+            <div class="hero-bg">
+                <div class="camera-layer" id="cameraBg">
+                    <div class="camera-frame">
+                        <div class="camera-overlay"></div>
+                        <div class="camera-info">
+                            <span>Sony Mirrorless • Cinematic Mood</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="watercolor-layer"></div>
+            </div>
 
-    <div class="flashlight-wrap" aria-label="Flashlight controls">
-      <div class="glow" id="glow"></div>
-      <button class="flashlight" id="flashlight" type="button" aria-pressed="false">
-        <span class="bulb">●</span>
-        <span class="flash-label">FLASHLIGHT</span>
-      </button>
-      <input id="brightness" class="brightness" type="range" min="0" max="100" value="35" aria-label="Light intensity">
-    </div>
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="happy">Happy 😊</span>
+                    <span class="world">World 🌍</span>
+                    <span class="photographer">
+                        Photographer's Day
+                        <span class="stars">✦ ✧ ✦ ✧</span>
+                    </span>
+                </h1>
 
-    <button class="bell" id="bell" type="button" aria-label="Open camera">
-      🔔
-      <span class="bell-tip">Drag down</span>
-    </button>
+                <p class="hero-subtitle">
+                    Day • August 19 <span class="emoji">😍</span>
+                </p>
 
-    <section class="download-panel">
-      <div>
-        <b>Download animation</b>
-        <span>1080p · 4K · 8K*</span>
-      </div>
-      <select id="quality">
-        <option value="1080">1080p</option>
-        <option value="2160">4K</option>
-        <option value="4320">8K</option>
-      </select>
-      <button id="downloadBtn" type="button">Download WebM</button>
-      <button id="shareBtn" type="button" class="ghost">Share / Copy link</button>
-      <small>*8K export depends on browser/device memory and is an upscale of the supplied image.</small>
-    </section>
-  </main>
+                <p class="hero-text">
+                    این صفحه برای همهٔ عکاس‌ها ساخته شده؛  
+                    می‌تونی تصویر متحرک روز جهانی عکاس را با کیفیت‌های مختلف رایگان دانلود کنی.
+                </p>
 
-  <div class="toast" id="toast"></div>
-  <script src="script.js"></script>
+                <a href="#downloads" class="cta-btn">دانلود 🎬</a>
+            </div>
+        </section>
+
+        <section id="downloads" class="downloads-section">
+            <h2>دانلود تصویر متحرک</h2>
+            <p class="downloads-desc">کیفیت مورد نظر را انتخاب کن:</p>
+
+            <div class="download-grid">
+                <div class="download-card">
+                    <h3>4K Ultra HD</h3>
+                    <p>کیفیت بالا برای نمایش حرفه‌ای.</p>
+                    <a href="downloads/photographer-day-4k.mp4" class="dl-btn" download>دانلود 4K</a>
+                </div>
+
+                <div class="download-card">
+                    <h3>8K Cinema</h3>
+                    <p>کیفیت سینمایی برای نمایش‌های بزرگ.</p>
+                    <a href="downloads/photographer-day-8k.mp4" class="dl-btn" download>دانلود 8K</a>
+                </div>
+
+                <div class="download-card">
+                    <h3>1080p Full HD</h3>
+                    <p>مناسب موبایل و شبکه‌های اجتماعی.</p>
+                    <a href="downloads/photographer-day-1080p.mp4" class="dl-btn" download>دانلود 1080p</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
+            <h2>دربارهٔ پروژه</h2>
+            <p>
+                این سایت برای روز جهانی عکاس ساخته شده تا هر کسی بتواند یک تصویر متحرک زیبا  
+                با حال‌وهوای دوربین‌های سونی و افکت آبرنگی بارانی دانلود کند.
+            </p>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <span>ساخته شده با عشق ❤️ برای همهٔ عکاس‌ها</span>
+        <span class="footer-note">GitHub Pages • hoseinmobsher313-svg</span>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
+     
